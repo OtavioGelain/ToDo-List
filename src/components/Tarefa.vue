@@ -2,7 +2,7 @@
     <div class="tarefa">
         <div>
             <h2>{{ nome }}</h2>
-            <p>{{ descricao }}</p>
+            <p class="tarefa-descricao">{{ descricao }}</p>
         </div>
         <button class="btn btn-success" @click="concluirTarefa">Concluir Tarefa</button>
 
@@ -36,6 +36,7 @@
         border-radius: 5px;
         width: 400px;
         height: 150px;
+        margin-bottom: 20px;
     }
 
     .tarefa > div {
@@ -50,5 +51,9 @@
         margin: 10px;
         width: 150px;
         align-self: center;
+    }
+    .tarefa-descricao{
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
 </style>
