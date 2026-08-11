@@ -1,38 +1,54 @@
 <template>
     <div class="tarefa">
-        <h4 class="tarefa-titulo">{{ titulo }}</h4>
-        <p class="tarefa-descricao">{{ descricao }}</p>
-        <button class="btn btn-primary" @click="concluir">Concluir</button>
+        <div>
+            <h2>{{ nome }}</h2>
+            <p>{{ descricao }}</p>
+        </div>
+        <button class="btn btn-success" @click="concluirTarefa">Concluir Tarefa</button>
+
     </div>
 </template>
-<script setup>
-    const props = defineProps({
-        id: Number,
-        titulo: String,
-        descricao: String
-    })
-    const emit = defineEmits(['concluir'])
-    function concluir() {
-        emit('concluir', props.id)
+<script>
+    export default {
+        props: {
+            id: Number,
+            nome: String,
+            descricao: String
+            //esta pegando as props do componente pai
+
+        },
+        methods: {
+            concluirTarefa(){
+                this.$emit('concluir-tarefa', this.id)
+                //Ele esta avisando que o usuario clicou no botao de concluir tarefa
+            }
+        }
     }
-</script>   
+</script>
 <style>
     .tarefa{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: center;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 400px;
+        height: 150px;
+    }
+
+    .tarefa > div {
+        flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: aliceblue;
-        border-radius: 10px;
-        border: solid 1px #ccc;
-        width: 500px;
-        height: 200px;
-        text-align: center;
-        margin-top: 20px;
     }
+
     .btn{
-        width: 100px;
+        margin: 10px;
+        width: 150px;
+        align-self: center;
     }
-
 </style>
-

@@ -1,73 +1,118 @@
-<script setup>
+<script>
     import Tarefa from './components/Tarefa.vue'
-    import { ref } from 'vue'
 
-    const titulo = ref('')
-    const descricao = ref('')
-    const tarefas = ref([
-        {
-            id: 1,
-            titulo: 'Estudar Vue.js',
-            descricao: 'Aprender os conceitos básicos do Vue.js e criar um projeto simples.',
+    export default {
+        name: 'App',
+        components: {
+            Tarefa
+        },
+        data() {
+            return {
+                nome: '',
+                descricao: '',
+                tarefas: [
+                    {
+                        id: 1,
+                        nome: 'Tarefa 1',
+                        descricao: 'Descrição da Tarefa 1'
+                    }
+                ]
+            }
+        },
+        //methods é sempre onde ficam minhas funções
+        methods: {
+            adicionarTarefa(){
+                const novaTarefa = {
+                    id: this.tarefas.length + 1,
+                    nome: this.nome,
+                    descricao: this.descricao
+                }
+                if(this.nome.trim() === '' || this.descricao.trim() === ''){
+                    alert('Por favor, preencha todos os campos.')
+                    return
+                }
+                this.tarefas.push(novaTarefa)
+                this.nome = ''
+                this.descricao = ''
+            },
+            concluirTarefa(id){
+                this.tarefas = this.tarefas.filter(tarefa => tarefa.id !== id)
+                //esta removendo a tarefa que foi concluida
+            }
+
         }
-    ])
-    function addTarefa(titulo, descricao) {
-        const novaTarefa = {
-            id: tarefas.length + 1,
-            titulo: titulo,
-            descricao: descricao
-        }
-        tarefas.value.push(novaTarefa)
+
     }
-    function concluirTarefa(id) {
-        tarefas.value = tarefas.value.filter(tarefa => tarefa.id !== id)
-    }
-    
 </script>
-
 <template>
-    <div class="container">
-        <h1 class="mt-4">Lista de Tarefas</h1>
-        <div>
-            <p>Titulo da Tarefa</p>
-            <input type="text" class="form-control" v-model="titulo" >
+    <div class="app">
+        <h1>Lista de Tarefas</h1>
+        <div class="container-tarefaT">
+            <label for="nome">Nome da Tarefa:</label>
+            <input type="text" name="nome" id="nome" v-model="nome" />
         </div>
-        <div>
-            <p>Descrição da Tarefa</p>
-            <input type="text" class="form-control" v-model="descricao" >
+        <div class="container-tarefaD">
+            <label for="descricao">Descrição da Tarefa:</label>
+            <textarea name="descricao" id="descricao" cols="30" rows="10" v-model="descricao"></textarea>
         </div>
-        <button class="btn btn-primary" @click="addTarefa(titulo, descricao)">Adicionar Tarefa</button>
+        <button class="btn btn-primary" @click="adicionarTarefa">Adicionar Tarefa</button>
     </div>
-  <Tarefa 
-    v-for="tarefa in tarefas"
-    :key="tarefa.id"
-    :titulo="tarefa.titulo" 
-    :descricao="tarefa.descricao" 
-    :id="tarefa.id"
-    @concluir="concluirTarefa"
-    />
+    <div class="lista-tarefas">
+        <Tarefa
+        v-for="tarefa in tarefas"
+        :key="tarefa.id"
+        :id="tarefa.id"
+        :nome="tarefa.nome"
+        :descricao="tarefa.descricao"
+        @concluir-tarefa="concluirTarefa"
+        />
+    </div>
+
+    <h4 v-if="tarefas.length == 0" class="alert alert-info">Nenhuma tarefa adicionada.</h4>
+
 </template>
 <style>
-    body{
-        background-color: #f8f9fa;
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
         display: flex;
-        justify-content: center;
-        gap: 50px;
-    }
-    .container{
-        display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 10px;
     }
-    .mt-4{
+    .app{
+        background-color: #f2f2f2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 400px;
+        width: 600px;
+        border: solid 1px #ccc;
+        border-radius: 10px;
+        margin-top: 50px;
+    }
+    .lista-tarefas{
+        display: flex;
+        text-align: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+    #descricao{
+        width: 300px;
+        height: 100px;
+    }
+    #nome{
+        width: 300px;
+    }
+    .container-tarefaT, .container-tarefaD{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+    .alert{
         margin-top: 20px;
         text-align: center;
     }
-    .btn{
-        width: 150px;
-        margin-top: 10px;
-    }
-    
 </style>
