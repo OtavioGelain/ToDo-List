@@ -1,12 +1,28 @@
 <script setup>
     import Tarefa from './components/Tarefa.vue'
-    const data = {
-        tarefa: {
+    import { ref } from 'vue'
+
+    const titulo = ref('')
+    const descricao = ref('')
+    const tarefas = ref([
+        {
             id: 1,
             titulo: 'Estudar Vue.js',
             descricao: 'Aprender os conceitos básicos do Vue.js e criar um projeto simples.',
         }
+    ])
+    function addTarefa(titulo, descricao) {
+        const novaTarefa = {
+            id: tarefas.length + 1,
+            titulo: titulo,
+            descricao: descricao
+        }
+        tarefas.value.push(novaTarefa)
     }
+    function concluirTarefa(id) {
+        tarefas.value = tarefas.value.filter(tarefa => tarefa.id !== id)
+    }
+    
 </script>
 
 <template>
@@ -14,17 +30,21 @@
         <h1 class="mt-4">Lista de Tarefas</h1>
         <div>
             <p>Titulo da Tarefa</p>
-            <input type="text" class="form-control" >
+            <input type="text" class="form-control" v-model="titulo" >
         </div>
         <div>
             <p>Descrição da Tarefa</p>
-            <input type="text" class="form-control" >
+            <input type="text" class="form-control" v-model="descricao" >
         </div>
-        <button class="btn btn-primary">Adicionar Tarefa</button>
+        <button class="btn btn-primary" @click="addTarefa(titulo, descricao)">Adicionar Tarefa</button>
     </div>
   <Tarefa 
-    :titulo="data.tarefa.titulo" 
-    :descricao="data.tarefa.descricao" 
+    v-for="tarefa in tarefas"
+    :key="tarefa.id"
+    :titulo="tarefa.titulo" 
+    :descricao="tarefa.descricao" 
+    :id="tarefa.id"
+    @concluir="concluirTarefa"
     />
 </template>
 <style>
