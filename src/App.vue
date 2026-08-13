@@ -1,12 +1,12 @@
 <script>
     import Tarefa from './components/Tarefa.vue'
-import TarefasConcluidas from './components/TarefasConcluidas.vue';
-    import tarefasConcluidas from './components/TarefasConcluidas.vue'
+    import TarefasConcluidas from './components/TarefasConcluidas.vue';
 
     export default {
         name: 'App',
         components: {
-            Tarefa
+            Tarefa,
+            TarefasConcluidas
         },
         data() {
             return {
@@ -46,7 +46,7 @@ import TarefasConcluidas from './components/TarefasConcluidas.vue';
                     tarefa.concluida = true
                 }
                 //esta removendo a tarefa que foi concluida
-            }
+            },
 
         },
         computed: {
@@ -74,6 +74,7 @@ import TarefasConcluidas from './components/TarefasConcluidas.vue';
         <button class="btn btn-primary" @click="adicionarTarefa">Adicionar Tarefa</button>
     </div>
     <div class="lista-tarefas">
+        <h2 class="lista-tarefas-pendente-titulo">Tarefas Pendentes</h2>
         <Tarefa
         v-for="tarefa in tarefasPendentes"
         :key="tarefa.id"
@@ -84,7 +85,9 @@ import TarefasConcluidas from './components/TarefasConcluidas.vue';
         @concluir-tarefa="concluirTarefa"
         />
     </div>
+    <h4 v-if="tarefasPendentes.length === 0" class="alert alert-info">Nenhuma tarefa pendente.</h4>
     <div class="lista-tarefas-concluidas">
+        <h2 class="tarefas-concluidas-titulo">Tarefas Concluidas</h2>
         <TarefasConcluidas
         v-for="tarefa in tarefasConcluidas"
         :key="tarefa.id"
@@ -95,7 +98,6 @@ import TarefasConcluidas from './components/TarefasConcluidas.vue';
         />
     </div>
 
-    <h4 v-if="tarefas.length == 0" class="alert alert-info">Nenhuma tarefa adicionada.</h4>
 
 </template>
 <style>
@@ -145,4 +147,16 @@ import TarefasConcluidas from './components/TarefasConcluidas.vue';
     textarea{
         resize: none;
     }
+    .tarefas-concluidas-titulo{
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .lista-tarefas-concluidas{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+   }
+   .lista-tarefas-pendente-titulo{
+        margin-bottom: 25px;
+   }
 </style>

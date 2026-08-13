@@ -1,7 +1,7 @@
 <template>
     <div class="tarefa">
         <div>
-            <h2>{{ nome }}</h2>
+            <h2 class="tarefa-titulo">{{ nome }}</h2>
             <p class="tarefa-descricao">{{ descricao }}</p>
         </div>
         <button class="btn btn-success" @click="concluirTarefa">Concluir Tarefa</button>
@@ -55,5 +55,8 @@
     .tarefa-descricao{
         overflow-wrap: break-word;
         word-break: break-word;
+    }
+    .tarefa-titulo{
+        font-weight: bold;
     }
 </style>
