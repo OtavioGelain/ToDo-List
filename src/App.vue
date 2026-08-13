@@ -1,5 +1,7 @@
 <script>
     import Tarefa from './components/Tarefa.vue'
+import TarefasConcluidas from './components/TarefasConcluidas.vue';
+    import tarefasConcluidas from './components/TarefasConcluidas.vue'
 
     export default {
         name: 'App',
@@ -80,6 +82,16 @@
         :descricao="tarefa.descricao"
         :concluida="tarefa.concluida"
         @concluir-tarefa="concluirTarefa"
+        />
+    </div>
+    <div class="lista-tarefas-concluidas">
+        <TarefasConcluidas
+        v-for="tarefa in tarefasConcluidas"
+        :key="tarefa.id"
+        :id="tarefa.id"
+        :nome="tarefa.nome"
+        :descricao="tarefa.descricao"
+        :concluida="tarefa.concluida"
         />
     </div>
 
