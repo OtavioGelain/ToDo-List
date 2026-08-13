@@ -14,7 +14,8 @@
                     {
                         id: 1,
                         nome: 'Tarefa 1',
-                        descricao: 'Descrição da Tarefa 1'
+                        descricao: 'Descrição da Tarefa 1',
+                        concluida: false
                     }
                 ]
             }
@@ -25,7 +26,8 @@
                 const novaTarefa = {
                     id: this.tarefas.length + 1,
                     nome: this.nome,
-                    descricao: this.descricao
+                    descricao: this.descricao,
+                    concluida: false
                 }
                 if(this.nome.trim() === '' || this.descricao.trim() === ''){
                     alert('Por favor, preencha todos os campos.')
@@ -36,10 +38,22 @@
                 this.descricao = ''
             },
             concluirTarefa(id){
-                this.tarefas = this.tarefas.filter(tarefa => tarefa.id !== id)
+                //this.tarefas = this.tarefas.filter(tarefa => tarefa.id !== id)
+                const tarefa = this.tarefas.find(t => t.id === id)
+                if(tarefa){
+                    tarefa.concluida = true
+                }
                 //esta removendo a tarefa que foi concluida
             }
 
+        },
+        computed: {
+            tarefasConcluidas() {
+                return this.tarefas.filter(tarefa => tarefa.concluida)
+            },
+            tarefasPendentes(){
+                return this.tarefas.filter(tarefa => !tarefa.concluida)
+            }
         }
 
     }
@@ -59,11 +73,12 @@
     </div>
     <div class="lista-tarefas">
         <Tarefa
-        v-for="tarefa in tarefas"
+        v-for="tarefa in tarefasPendentes"
         :key="tarefa.id"
         :id="tarefa.id"
         :nome="tarefa.nome"
         :descricao="tarefa.descricao"
+        :concluida="tarefa.concluida"
         @concluir-tarefa="concluirTarefa"
         />
     </div>
