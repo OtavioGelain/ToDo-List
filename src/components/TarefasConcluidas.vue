@@ -19,7 +19,7 @@
         display: flex;
         flex-direction: column;
         text-align: center;
-        background-color: #26a126;
+        background-color: #2fe32f;
         color: black;
         border: 1px solid #ccc;
         border-radius: 5px;
